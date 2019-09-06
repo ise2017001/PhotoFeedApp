@@ -31,10 +31,10 @@ class feed extends React.Component {
                     onRefresh = {this.loadNew}
                     data = {this.state.photo_feed}
                     keyExtractor = {(item, index) => {index.toString()}}
-                    style = {{backgroundColor : 'lightgray', flex : 1}}
+                    style = {{backgroundColor : 'lightgrey', flex : 1}}
                     renderItem = {({item, index}) => (
-                        <View key = {index}>
-                            <View>
+                        <View key = {index} style = {{width : '100%', overflow : 'hidden', marginBottom : 5, justifyContent : 'space-between', borderBottomWidth : 1, borderColor : 'grey'}}>
+                            <View style = {{width : '100%', justifyContent : 'space-between', padding : 5, flexDirection : 'row'}}>
                                 <Text> Posted at </Text>
                                 <Text> Uploader </Text>
                             </View>
