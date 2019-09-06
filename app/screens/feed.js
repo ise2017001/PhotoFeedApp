@@ -42,9 +42,9 @@ class feed extends React.Component {
                                 <Image source={{uri : 'https://source.unsplash.com/random/500x' + Math.floor(Math.random() * 800) + 500}}
                                        style={{width : '100%', resizeMode : 'cover', height : 300}}/>
                             </View>
-                            <View>
+                            <View style = {{padding : 5}}>
                                 <Text> Post Tag </Text>
-                                <Text> Comments </Text>
+                                <Text style={{marginTop : 10, textAlign : 'center'}}> Comments </Text>
                             </View>
                         </View>
                     )}
