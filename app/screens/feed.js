@@ -1,14 +1,59 @@
 import React from 'react';
 import {FlatList, StyleSheet, Text, View, Image} from 'react-native';
+import {f, auth, database, storage} from '../../config/config.js';
 
 class feed extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            photo_feed : [0, 1, 2, 3, 4],
-            refresh : false
+            photo_feed : [],
+            refresh : false,
+            loading : true
         }
     }
+
+    componentDidMount = () => {
+    };
+
+    loadFeed = () => {
+        this.setState({
+            refresh : true,
+            photo_feed : []
+        });
+
+        let that = this;
+        database.ref('photos').orderByChild('posted').once('value').then((snapshot)=>{
+            const exists = (snapshot.val() !== null);
+            if (exists) data = snapshot.val();
+            let photo_feed = that.state.photo_feed;
+
+            for (const photo in data) {
+                let photoObj = data[photo];
+                database.ref('photos').child(photoObj.author).once('value').then((snapshot)=>{
+                    const exists = (snapshot.val() !== null);
+                    if (exists) {
+                        data = snapshot.val();
+                        let photo_feed = that.state.photo_feed;
+                         for (let photo in data) {
+                             let photoObj = data[photo];
+                              database.ref('Users').child(photoObj.author).once('value').then((snapshot)=>{
+                                  const exists = (snapshot.val() !== null);
+                                  if (exists) {
+                                      data = snapshot.val();
+                                      photo_feed.push({
+                                          id : photo,
+                                          url : photoObj.url,
+
+                                      })
+                                  }
+                              })
+                         }
+                    }
+                })
+
+            }
+         });
+    };
 
     render() {
         return (
